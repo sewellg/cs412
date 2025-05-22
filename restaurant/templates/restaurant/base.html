@@ -1,0 +1,29 @@
+{% load static %}
+<html>
+    <head>
+        <title>Welcome to Bob's Burgers</title>
+        <link rel="stylesheet" href="{% static 'styles2.css' %}">
+    </head>
+    <header>
+        <h1>Bob's Burgers!</h1>
+        <hr>
+    </header>
+    <div class="grid">
+
+    <div>
+    <nav>
+        <a href="{% url 'restaurant_main' %}">Home</a><br>
+        <a href="{% url 'order' %}">Order Here</a><br>
+ 
+    </nav>
+    
+    </div>
+    <body>
+        {% block content %}
+        {% endblock %}
+        
+    </body>
+    </div>
+    <hr>
+    <footer>Copyright 2025</footer>
+</html>

@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Peter Griffin's Quote of the Day</title>
+        <link rel="stylesheet" href="{% static 'styles2.css' %}">
+    </head>
+    <div class="grid">
+    <body>
+        <nav>
+            <ul style="list-style-type:none;">
+            <li><a href="{% url 'quote' %}">Home</a></li>
+            <br>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <br>
+            <li><a href="{% url 'show_all' %}">Show All Quotes</a></li>
+            </ul>
+        </nav>
+        <main>
+        <h1>Peter Griffin's Quote of the Day!</h1>
+        <hr>
+        {% block content %}
+        {% endblock %}
+        </main>
+        <div class="spacer">
+            <p></p>
+        </div>
+        
+        <footer>
+            <hr>
+            Designed by Grace Sewell <br>
+            Generated at {{time}}.
+        </footer>
+    </body>
+    </div>
+</html>

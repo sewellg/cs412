@@ -1,0 +1,34 @@
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    padding: 10px;
+    text-align: center;
+
+}
+html {
+    background-color:peachpuff;
+    text-align: center;
+
+}
+main {
+    border-left: 1px solid black;
+    padding: 10px;
+}
+footer {
+    grid-column: span 5;
+}
+hr {
+    color: black;
+    border-color: black;
+    background-color: black;
+}
+ul.dashed {
+  list-style-type: none;
+}
+ul.dashed > li {
+    text-indent: -20px;
+}
+ul.dashed > li:before {
+  content: "- ";
+  text-indent: -5px;
+}

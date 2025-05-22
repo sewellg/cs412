@@ -1,0 +1,27 @@
+{% extends 'restaurant/base.html' %} 
+
+{% block content %}
+
+<div>
+    <h2>Order Now!</h2>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h3>Menu</h3>
+        <li>Hamburger ($4.99)<input type="checkbox" name="hamburger"></li>
+        <li>Cheeseburger ($5.99)<input type="checkbox" name="cheeseburger"></li>
+        <li>Fries ($3.99)<input type="checkbox" name="fries"></li>
+        <li>Soft Drink ($1.99)<input type="checkbox" name="drink">
+            <ul class="dashed">
+            <li>Pepsi<input type="radio" name="drinkchoice"></li>
+            <li>Sprite<input type="radio" name="drinkchoice"></li>
+            <li>Mt. Dew<input type="radio" name="drinkchoice"></li>
+            <li>Hi-C Orange<input type="radio" name="drinkchoice"></li>
+            </ul>
+        </li>
+        <h4>Daily Special!</h4>
+        Today's Daily Special is: {{botd}} <input type="checkbox" name="botd">
+    </form>
+</div>
+    
+{% endblock %}

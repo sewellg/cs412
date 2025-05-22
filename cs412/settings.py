@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-aoo_d&=kqbjcn6toh!dv2epe6v+5g0+2dcdy^cv52bpc$!on0q
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'cs-webapps.bu.edu'
+    '*'
 ]
 
 
@@ -40,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hw',
+    'quotes',
+    'formdata',
+    'restaurant',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +65,7 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            "string_if_invalid": "WARNING: {{%s}} is not a valid context variable.",
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -140,3 +146,4 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/gsewell/static/'
     MEDIA_URL = '/gsewell/media/'
+
