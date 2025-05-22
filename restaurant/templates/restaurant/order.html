@@ -2,25 +2,36 @@
 
 {% block content %}
 
-<div>
+<div class="left">
     <h2>Order Now!</h2>
 
-    <form action="" method="POST">
+    <form action="{% url 'confirmation' %}" method="POST">
         {% csrf_token %}
         <h3>Menu</h3>
         <li>Hamburger ($4.99)<input type="checkbox" name="hamburger"></li>
         <li>Cheeseburger ($5.99)<input type="checkbox" name="cheeseburger"></li>
-        <li>Fries ($3.99)<input type="checkbox" name="fries"></li>
-        <li>Soft Drink ($1.99)<input type="checkbox" name="drink">
+        <li>Fries ($3.99)<input type="checkbox" name="fries">
             <ul class="dashed">
-            <li>Pepsi<input type="radio" name="drinkchoice"></li>
-            <li>Sprite<input type="radio" name="drinkchoice"></li>
-            <li>Mt. Dew<input type="radio" name="drinkchoice"></li>
-            <li>Hi-C Orange<input type="radio" name="drinkchoice"></li>
+                <li>Cheese Fries (+$1)<input type="checkbox" name="cheese_fries"></li>
+                <li>Chili Cheese Fries (+$2)<input type="checkbox" name="chili_cheese_fries"></li>
             </ul>
         </li>
-        <h4>Daily Special!</h4>
+            
+        <li>Soft Drink ($1.99)<input type="checkbox" name="drink">
+        </li>
+        <h4>Daily Special! ($7.99)</h4>
         Today's Daily Special is: {{botd}} <input type="checkbox" name="botd">
+        <p></p>
+        <h4>Special Instructions</h4>
+        <input type="text" name="special">
+        <h4>Customer Name</h4>
+        <input type="text" name="name">
+        <h4>Phone Number</h4>
+        <input type="text" name="phone">
+        <h4>Email</h4>
+        <input type="email" name="email">
+        <p></p>
+        <input type="submit">
     </form>
 </div>
     

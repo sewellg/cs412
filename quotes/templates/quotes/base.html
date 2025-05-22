@@ -6,9 +6,11 @@
         <title>Peter Griffin's Quote of the Day</title>
         <link rel="stylesheet" href="{% static 'styles2.css' %}">
     </head>
-    <div class="grid">
+    <div class="grid"> 
+        <!-- formatted as a grid to make columns for nav and body underneath a spanned header -->
     <body>
         <nav>
+            <!-- column 1: nav -->
             <ul style="list-style-type:none;">
             <li><a href="{% url 'quote' %}">Home</a></li>
             <br>
@@ -18,12 +20,14 @@
             </ul>
         </nav>
         <main>
+            <!-- column 2: main page -->
         <h1>Peter Griffin's Quote of the Day!</h1>
         <hr>
         {% block content %}
         {% endblock %}
         </main>
         <div class="spacer">
+            <!-- 3rd column is a spacer, empty -->
             <p></p>
         </div>
         

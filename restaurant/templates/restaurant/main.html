@@ -1,9 +1,9 @@
 {% extends 'restaurant/base.html' %}
-
+{% load static %}
 {% block content %}
-<div>
+<div class="main">
 <h2>Welcome to Bob's Burgers!</h2>
-<img src="restaurant/bobs.jpg">
+<img src="{% static 'bobs.jpg' %}">
 </div>
 <br>
 

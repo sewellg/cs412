@@ -45,6 +45,7 @@ def quote(request):
     return render(request, template_name, context)
 
 def show_all(request):
+    '''responds to url, delegates to show_all template'''
     template_name = 'quotes/show_all.html'
 
     context = {

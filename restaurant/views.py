@@ -35,15 +35,56 @@ def order(request):
 def confirmation(request):
     template_name = 'restaurant/confirmation.html'
     print(request.POST)
+    currenttime = time.time()
+    expectedtime = currenttime + (random.randint(30,60) * 60)
+
+    order = []
+    total = 0
 
     if request.POST:
 
-        hamburger = request.POST['hamburger']
-        cheeseburger = request.POST['cheeseburger']
-        fries = request.POST['fries']
-        drink = request.POST['drink']
-        botd = request.POST['botd']
+        if 'hamburger' in request.POST:
+            order += ['Hamburger']
+            total += 4.99
+        if 'cheeseburger' in request.POST:
+            order += ['Cheeseburger']
+            total += 5.99
+        if 'fries' in request.POST:
+            order += ['Fries']
+            total += 3.99
+        if 'cheese_fries' in request.POST:
+            if 'Fries' in order:
+                order.remove('Fries')
+                total -= 3.99
+            order += ['Cheese Fries']
+            total += 4.99
+        if 'chili_cheese_fries' in request.POST:
+            if 'Fries' in order:
+                order.remove('Fries')
+                total -= 3.99
+            order += ['Chili Cheese Fries']
+            total += 5.99
+        if 'drink' in request.POST:
+            order += ['Soft Drink']
+            total += 1.99
+        if 'botd' in request.POST:
+            order += ['Burger of the Day']
+            total += 7.99
+
+        special = request.POST['special']
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
+
 
         context = {
-            'order': [hamburger, cheeseburger, fries, drink, botd]
+            'order': order,
+            'total': total,
+            'special': special,
+            'name': name,
+            'phone': phone,
+            'email': email,
+            'expectedtime': time.ctime(expectedtime),
         }
+
+    return render(request, template_name, context)
