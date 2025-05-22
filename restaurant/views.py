@@ -15,19 +15,28 @@ def main(request):
 
     template_name = 'restaurant/main.html'
 
-    return render(request, template_name)
+    context = {
+        'time': time.ctime(),
+    }
+
+    return render(request, template_name, context)
 
 def restaurant_main(request):
 
     template_name = 'restaurant/main.html'
 
-    return render(request, template_name)
+    context = {
+        'time': time.ctime(),
+    }
+
+    return render(request, template_name, context)
 
 def order(request):
     template_name = 'restaurant/order.html'
 
     context = {
     "botd": random.choice(daily_special),
+    'time': time.ctime(),
     }
 
     return render(request, template_name, context)
@@ -85,6 +94,7 @@ def confirmation(request):
             'phone': phone,
             'email': email,
             'expectedtime': time.ctime(expectedtime),
+            'time': time.ctime(),
         }
 
     return render(request, template_name, context)
