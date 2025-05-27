@@ -22,13 +22,13 @@ header {
     margin: 40px auto;
     border-bottom: 1px solid #bbc7c7;
 }
-.grid-container {
+.container {
     background: #eee;
     max-width: 900px;
-    display: grid;
+    display: inline-grid;
     /* grid-template-columns: 300px 300px 300px; */
     grid-template-columns: repeat(3, 1fr);
-     grid-gap: 10px;
+    grid-gap: 10px;
     max-width: 1200px;
     margin: 20px auto;
 }
@@ -55,8 +55,4 @@ nav li {
         display: block; 
         margin: 0px 20px;
     }
-}
-
-tr {
-    padding: 20px;
 }
