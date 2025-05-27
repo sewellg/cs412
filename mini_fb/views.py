@@ -1,3 +1,7 @@
+# File: views.py
+# Author: Grace Sewell, gsewell@bu.edu, 5/27/25
+# Description: shows all of the views associated with mini_fb app
+
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Profile

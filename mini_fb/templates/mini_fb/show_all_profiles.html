@@ -1,10 +1,15 @@
+ <!-- File: show_all_profiles.html
+Author: Grace Sewell, gsewell@bu.edu, 5/27/25
+Description: extends from base.html to show all profiles on mini_fb -->
  {% extends 'mini_fb/base.html' %}
 
  {% block content %}
  <div>
     <div class="container">
+        <!-- using container/grid in css to create a grid of profiles with a for loop -->
         {% for profile in profiles %}
         <div class="item">
+            <!-- each individual item in the container is a profile -->
             <p>
                 <a href="{% url 'show_profile' profile.pk %}">
                     <img src="{{profile.profile_image_url}}" style="width:200px;height:200px">

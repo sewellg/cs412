@@ -1,3 +1,7 @@
+# File: models.py
+# Author: Grace Sewell, gsewell@bu.edu, 5/27/25
+# Description: models for mini_fb app
+
 from django.db import models
 
 # Create your models here.
@@ -11,4 +15,5 @@ class Profile(models.Model):
     profile_image_url = models.URLField()
 
     def __str__(self):
+        # replaces default self with a title of the profile's first and last name
         return f'{self.first_name} {self.last_name}'
