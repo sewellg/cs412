@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h1>showing all articles</h1>
+
+<!-- {{articles}} -->
+
+<main class="grid-container">
+    <!-- scriplet code for a for loop -->
+    {% for article in articles %}
+    <article>
+        <div>
+        <h2>{{article.title}}</h2>
+        <h3>by {{article.author}}</h3>
+        <p>
+            {{article.text}}
+        </p>
+        <a href="{% url 'article' article.pk %}">
+        <img src="{{article.image_url}}">"
+        </a>
+        </div>
+    </article>
+    <hr>
+    {% endfor %}
+</main>
+
+{% endblock %}
