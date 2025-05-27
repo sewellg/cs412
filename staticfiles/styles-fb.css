@@ -1,0 +1,45 @@
+body {
+    margin: 30px;
+    background: peachpuff;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul, li {
+    padding: 0px;
+    list-style-type: none;
+}
+
+h1, h2, h3 {
+    color: black;
+}
+
+p {
+    color: black;
+}
+
+header {
+    max-width: 1200px;
+    margin: 40px auto;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.item {
+    margin: 5px;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 10px;
+    text-align: center;
+}
+.item img {
+    border: 2px solid white;
+    border-radius: 10px;
+
+}
+
