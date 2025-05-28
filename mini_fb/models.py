@@ -17,3 +17,15 @@ class Profile(models.Model):
     def __str__(self):
         # replaces default self with a title of the profile's first and last name
         return f'{self.first_name} {self.last_name}'
+    
+class StatusMessage(models.Model):
+    '''encapsulates data of a profile's status message'''
+
+    # data attributes of status message objects
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.profile}'s Status"

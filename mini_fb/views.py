@@ -4,7 +4,7 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from .models import Profile
+from .models import Profile, StatusMessage
 
 
 # Create your views here.
