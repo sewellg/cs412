@@ -3,6 +3,7 @@
 # Description: models for mini_fb app
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -13,6 +14,15 @@ class Profile(models.Model):
     city = models.CharField(blank=True)
     email_address = models.EmailField()
     profile_image_url = models.URLField()
+
+    def get_status_messages(self):
+        statuses = StatusMessage.objects.filter(profile=self)
+        return statuses
+    
+    def get_absolute_url(self):
+        '''return url to display one instance of model'''
+        return reverse('show_profile', kwargs={'pk':self.pk})
+
 
     def __str__(self):
         # replaces default self with a title of the profile's first and last name
@@ -28,4 +38,4 @@ class StatusMessage(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.profile}'s Status"
+        return f"{self.message}"
