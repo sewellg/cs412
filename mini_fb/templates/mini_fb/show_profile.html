@@ -5,29 +5,34 @@ Description: extends base.html and shows a singular profile -->
 {% extends 'mini_fb/base.html' %}
 {% load static %}
 {% block content %}
-<div>
+<!-- <div>
     <h1 style="text-align: center;">{{profile.first_name}} {{profile.last_name}}</h1>
 </div>
-<hr>
+<hr> -->
+
 <div class="container">
     <div class="item">
         <img src="{{profile.profile_image_url}}" style="width:300px;height:300px">
     </div>
+    <div></div>
     <div class="item">
         <h3>About Info</h3>
         <hr>
         <p>City: {{profile.city}}</p>
         <p>Email: {{profile.email_address}}</p>
     </div>
-    <div class="item">
+    <div></div>
+</div>
+<div class="item">
         <h3>Statuses</h3>
         <a href="{% url 'create_status' profile.pk %}">Create Status</a>
         <hr>
         <ul>
             {% for status in profile.get_status_messages %}
-            <li>{{status.message}}</li><br>
+            <li>{{status.message}}<br>
+            - {{status.timestamp}}</li><br>
             {% endfor %}
         </ul>
     </div>
-</div>
+
 {% endblock %}

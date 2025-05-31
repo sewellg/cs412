@@ -26,12 +26,13 @@ header {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 500px 500px;
     grid-template-rows: auto;
     column-gap: 10px;
 }
 
 .item {
+    /* width: 300px; */
     margin: 5px;
     align-items: center;
     border: 1px solid gray;
@@ -41,7 +42,9 @@ header {
 .item img {
     border: 2px solid white;
     border-radius: 10px;
-
+}
+.status {
+    width: 700px;
 }
 hr {
     background-color: black;
