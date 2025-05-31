@@ -1,3 +1,7 @@
+# File: forms.py
+# Author: Grace Sewell, gsewell@bu.edu, 5/27/25
+# Description: forms for mini_fb app
+
 from django import forms
 from .models import Profile, StatusMessage
 

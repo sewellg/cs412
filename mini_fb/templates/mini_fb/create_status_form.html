@@ -6,20 +6,21 @@
 
     <form method="POST">
         {% csrf_token %}
-    <table>
-    {% for field in form %}
-    <tr>
-        <th>{{field.name}}</th>
-        <td>{{field}}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-        <td></td>
-        <td>
-            <input type='submit' name = 'Add Status!' value= 'Add Status!'>
-        </td>
-    </tr>
-    </table>
+        <table>
+            <!-- display form as a table, including the field name -->
+            {% for field in form %}
+            <tr>
+                <th>{{field.name}}</th>
+                <td>{{field}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td>
+                    <input type='submit' name = 'Add Status!' value= 'Add Status!'>
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 {% endblock %}

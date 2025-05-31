@@ -54,6 +54,7 @@ class CreateStatusMessageView(CreateView):
         return super().form_valid(form)
     
     def get_success_url(self):
+        '''gets url to display upon successfully submitting form'''
         # retrieve the PK from the URL pattern
         pk = self.kwargs['pk']
         # call reverse to generate the URL for this Article

@@ -9,6 +9,8 @@ from django.urls import reverse
 
 class Profile(models.Model):
     '''encapsulate data of a facebook profile'''
+
+    # data attributes for a profile
     first_name = models.CharField()
     last_name = models.CharField()
     city = models.CharField(blank=True)
@@ -16,7 +18,8 @@ class Profile(models.Model):
     profile_image_url = models.URLField()
 
     def get_status_messages(self):
-        statuses = StatusMessage.objects.filter(profile=self)
+        '''filters all status messages by their profile'''
+        statuses = StatusMessage.objects.filter(profile=self).order_by('-timestamp').values()
         return statuses
     
     def get_absolute_url(self):

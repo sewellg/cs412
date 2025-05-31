@@ -8,22 +8,21 @@ Description: extends from base.html to show all profiles on mini_fb -->
     <div class="container">
         <!-- using container/grid in css to create a grid of profiles with a for loop -->
         {% for profile in profiles %}
-        <div class="item">
-            <!-- each individual item in the container is a profile -->
-            <p>
-                <a href="{% url 'show_profile' profile.pk %}">
-                    <img src="{{profile.profile_image_url}}" style="width:200px;height:200px">
-                </a>
-            </p>
-            <p>
-                <a href="{% url 'show_profile' profile.pk %}">
-                    <h3>{{profile.first_name}} {{profile.last_name}}</h3>
-                </a>
-                <p></p>
-            </p>
-        </div>
+            <div class="item">
+                <!-- each individual item in the container is a profile -->
+                <p>
+                    <a href="{% url 'show_profile' profile.pk %}">
+                        <img src="{{profile.profile_image_url}}" style="width:200px;height:200px">
+                    </a>
+                </p>
+                <p>
+                    <a href="{% url 'show_profile' profile.pk %}">
+                        <h3>{{profile.first_name}} {{profile.last_name}}</h3>
+                    </a>
+                    <p></p>
+                </p>
+            </div>
         {% endfor %}
-        </tr>
     </div>
  </div>
  {% endblock %}

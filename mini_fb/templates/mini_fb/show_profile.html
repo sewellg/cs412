@@ -5,10 +5,10 @@ Description: extends base.html and shows a singular profile -->
 {% extends 'mini_fb/base.html' %}
 {% load static %}
 {% block content %}
-<!-- <div>
+<div>
     <h1 style="text-align: center;">{{profile.first_name}} {{profile.last_name}}</h1>
 </div>
-<hr> -->
+<hr>
 
 <div class="container">
     <div class="item">
@@ -25,6 +25,7 @@ Description: extends base.html and shows a singular profile -->
 </div>
 <div class="item">
         <h3>Statuses</h3>
+        <!-- loops through all statuses for a given profile and displays them -->
         <a href="{% url 'create_status' profile.pk %}">Create Status</a>
         <hr>
         <ul>
