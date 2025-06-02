@@ -149,3 +149,7 @@ if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/gsewell/static/'
     MEDIA_URL = '/gsewell/media/'
 
+# declarations to reference media files
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"

@@ -19,7 +19,8 @@ class Profile(models.Model):
 
     def get_status_messages(self):
         '''filters all status messages by their profile'''
-        statuses = StatusMessage.objects.filter(profile=self).order_by('-timestamp').values()
+        
+        statuses = StatusMessage.objects.filter(profile=self).order_by('-timestamp')
         return statuses
     
     def get_absolute_url(self):
@@ -42,3 +43,21 @@ class StatusMessage(models.Model):
 
     def __str__(self):
         return f"{self.message}"
+    
+    def get_images(self):
+        print('hello')
+        images = StatusImage.objects.filter(status_message=self)
+        
+        return images
+    
+class Image(models.Model):
+    '''encapsulates data of an image'''
+    # data attributes of images
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    image_file = models.ImageField()
+    caption = models.CharField(blank=True)
+
+class StatusImage(models.Model):
+    status_message = models.ForeignKey(StatusMessage, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+

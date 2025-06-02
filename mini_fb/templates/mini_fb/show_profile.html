@@ -30,9 +30,15 @@ Description: extends base.html and shows a singular profile -->
         <hr>
         <ul>
             {% for status in profile.get_status_messages %}
-            <li>{{status.message}}<br>
-            - {{status.timestamp}}</li><br>
-            {% endfor %}
+                <li>{{status.message}}<br>
+                - {{status.timestamp}}<br>
+                    
+                    {% for img in status.get_images %}
+                        <img src="{{img.image.image_file.url}}" style="width:100px">
+                        
+                    {% endfor %}
+                    </li>
+            {% endfor %} 
         </ul>
     </div>
 
