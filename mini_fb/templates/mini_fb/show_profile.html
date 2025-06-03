@@ -7,6 +7,8 @@ Description: extends base.html and shows a singular profile -->
 {% block content %}
 <div>
     <h1 style="text-align: center;">{{profile.first_name}} {{profile.last_name}}</h1>
+    <a href="{% url 'create_status' profile.pk %}" style="text-align: center;">Create Status</a><br>
+    <a href="{% url 'update_profile' profile.pk %}" style="text-align: center;">Update Profile</a>
 </div>
 <hr>
 
@@ -26,18 +28,17 @@ Description: extends base.html and shows a singular profile -->
 <div class="item">
         <h3>Statuses</h3>
         <!-- loops through all statuses for a given profile and displays them -->
-        <a href="{% url 'create_status' profile.pk %}">Create Status</a>
         <hr>
         <ul>
             {% for status in profile.get_status_messages %}
-                <li>{{status.message}}<br>
-                - {{status.timestamp}}<br>
-                    
+                <li>{{status.message}}<br>                    
                     {% for img in status.get_images %}
-                        <img src="{{img.image.image_file.url}}" style="width:100px">
-                        
+                        <img src="{{img.image.image_file.url}}" style="width:100px"> <br>
                     {% endfor %}
-                    </li>
+                    - {{status.timestamp}}<br>
+                    <a href="{% url 'delete_status' status.pk %}"><input type="button" name="delete" value="Delete"></a>
+                    <a href="{% url 'update_status' status.pk %}"><input type="button" name="update" value="Update"></a>
+                </li>
             {% endfor %} 
         </ul>
     </div>

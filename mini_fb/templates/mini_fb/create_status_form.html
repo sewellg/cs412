@@ -4,7 +4,7 @@
 <div>
     <h1>Create New Status</h1>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             <!-- display form as a table, including the field name -->
@@ -14,6 +14,12 @@
                 <td>{{field}}</td>
             </tr>
             {% endfor %}
+            <tr>
+                <th>Add Image</th>
+                <td>
+                    <input type="file" name="files" multiple />
+                </td>
+            </tr>
             <tr>
                 <td></td>
                 <td>

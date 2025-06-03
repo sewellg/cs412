@@ -45,7 +45,6 @@ class StatusMessage(models.Model):
         return f"{self.message}"
     
     def get_images(self):
-        print('hello')
         images = StatusImage.objects.filter(status_message=self)
         
         return images

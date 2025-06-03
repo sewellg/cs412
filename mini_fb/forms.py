@@ -18,3 +18,14 @@ class CreateStatusMessageForm(forms.ModelForm):
         model = StatusMessage
         fields = ['message']
         
+class UpdateProfileForm(forms.ModelForm):
+    '''a form to update profiles in mini_fb'''
+    class Meta():
+        model = Profile
+        fields = ['city', 'email_address', 'profile_image_url']
+
+class UpdateStatusForm(forms.ModelForm):
+    '''a form to update profiles in mini_fb'''
+    class Meta():
+        model = StatusMessage
+        fields = ['message']
