@@ -1,0 +1,32 @@
+<!-- File: show_all_profiles.html
+Author: Grace Sewell, gsewell@bu.edu, 5/27/25
+Description: extends from base.html to show all profiles on mini_fb -->
+ {% extends 'mini_fb/base.html' %}
+
+ {% block content %}
+ <div>
+<h2>People {{profile.first_name}} may know:</h2>
+    <div class="container">
+        <!-- using container/grid in css to create a grid of profiles with a for loop -->
+        <!--  -->
+        
+            {% for friend in profile.get_friend_suggestions %}
+            <div class="item">
+                <!-- each individual item in the container is a profile -->
+                <p>
+                    <a href="{% url 'show_profile' friend.pk %}">
+                        <img src="{{friend.profile_image_url}}" style="width:200px;height:200px">
+                    </a>
+                </p>
+                <p>
+                    <a href="{% url 'show_profile' friend.pk %}">
+                        <h3>{{friend.first_name}} {{friend.last_name}}</h3>
+                    </a>
+                    <p></p>
+                </p>
+            </div>
+            {% endfor %}
+        
+    </div>
+ </div>
+ {% endblock %}

@@ -3,7 +3,7 @@
 # Description: shows all of the views associated with mini_fb app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import *
 from .forms import *
 from django.urls import reverse
@@ -98,3 +98,14 @@ class UpdateStatusMessageView(UpdateView):
         pk = self.kwargs['pk']
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
     
+class AddFriendView(View):
+    def dispatch(self, request, *args, **kwargs):
+        profile1 = Profile.objects.get(pk=self.kwargs['pk'])
+        profile2 = Profile.objects.get(pk=self.kwargs['other_pk'])
+        profile1.add_friend(profile2)
+        return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+    
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = "mini_fb/friend_suggestions.html"
+    context_object_name = "profile"
