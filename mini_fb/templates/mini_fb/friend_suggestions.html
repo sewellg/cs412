@@ -22,7 +22,9 @@ Description: extends from base.html to show all profiles on mini_fb -->
                     <a href="{% url 'show_profile' friend.pk %}">
                         <h3>{{friend.first_name}} {{friend.last_name}}</h3>
                     </a>
-                    <p></p>
+                    <p>
+                        <a href="{% url 'add_friend' profile.pk friend.pk %}"><input type="button" name="add" value="Add Friend"></a>
+                    </p>
                 </p>
             </div>
             {% endfor %}

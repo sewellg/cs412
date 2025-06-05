@@ -1,0 +1,20 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<div class="item">
+    <br>
+    <a href="{% url 'show_profile' profile.pk %}">Go Back to Profile</a>
+    <ul>
+        {% for status in profile.get_news_feed %}
+            <li><strong>{{status.message}}</strong><br>                    
+                {% for img in status.get_images %}
+                    <img src="{{img.image.image_file.url}}" style="width:100px"> <br>
+                {% endfor %}
+                by {{status.profile.first_name}} {{status.profile.last_name}}
+                - {{status.timestamp}}<br>
+            </li>
+            <br>
+        {% endfor %} 
+    </ul>
+</div>
+{% endblock %}

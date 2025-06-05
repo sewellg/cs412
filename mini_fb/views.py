@@ -2,7 +2,7 @@
 # Author: Grace Sewell, gsewell@bu.edu, 5/27/25
 # Description: shows all of the views associated with mini_fb app
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import *
 from .forms import *
@@ -103,9 +103,14 @@ class AddFriendView(View):
         profile1 = Profile.objects.get(pk=self.kwargs['pk'])
         profile2 = Profile.objects.get(pk=self.kwargs['other_pk'])
         profile1.add_friend(profile2)
-        return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+        return redirect(reverse('show_profile', kwargs={'pk': self.kwargs['pk']}))
     
 class ShowFriendSuggestionsView(DetailView):
     model = Profile
     template_name = "mini_fb/friend_suggestions.html"
+    context_object_name = "profile"
+
+class ShowNewsFeedView(DetailView):
+    model = Profile
+    template_name = "mini_fb/news_feed.html"
     context_object_name = "profile"

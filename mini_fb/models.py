@@ -53,6 +53,17 @@ class Profile(models.Model):
                     possible_friends.append(profile)
         print(possible_friends)
         return possible_friends
+    
+    def get_news_feed(self):
+        friends = self.get_friends()
+        friends.append(self)
+        messages = []
+        for friend in friends:
+            statuses = StatusMessage.objects.filter(profile=friend)
+            for status in statuses:
+                messages.append(status)
+        print(messages)
+        return messages
 
     def __str__(self):
         # replaces default self with a title of the profile's first and last name

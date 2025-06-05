@@ -8,7 +8,10 @@ Description: extends base.html and shows a singular profile -->
 <div>
     <h1 style="text-align: center;">{{profile.first_name}} {{profile.last_name}}</h1>
     <a href="{% url 'create_status' profile.pk %}" style="text-align: center;">Create Status</a><br>
-    <a href="{% url 'update_profile' profile.pk %}" style="text-align: center;">Update Profile</a>
+    <a href="{% url 'update_profile' profile.pk %}" style="text-align: center;">Update Profile</a><br>
+    <a href="{% url 'show_friend_suggestions' profile.pk %}">Friend Suggestions</a><br>
+    <a href="{% url 'show_news_feed' profile.pk %}">News Feed</a><br>
+    
 </div>
 <hr>
 
@@ -16,18 +19,29 @@ Description: extends base.html and shows a singular profile -->
     <div class="item">
         <img src="{{profile.profile_image_url}}" style="width:300px;height:300px">
     </div>
-    <div></div>
+    <div class="item">
+        <h3>{{profile.first_name}}'s Friends</h3>
+            {% for friend in profile.get_friends %}
+                <p>
+                    <a href="{% url 'show_profile' friend.pk %}">
+                        <img src="{{friend.profile_image_url}}" style="width:50px;height:50px">
+                    </a>
+                </p>
+                <p>
+                    <a href="{% url 'show_profile' friend.pk %}">
+                        <h3>{{friend.first_name}} {{friend.last_name}}</h3>
+                    </a>
+                    <p></p>
+                </p>
+            {% endfor %}
+    </div>
     <div class="item">
         <h3>About Info</h3>
         <hr>
         <p>City: {{profile.city}}</p>
         <p>Email: {{profile.email_address}}</p>
     </div>
-    <div>
-        <h3>{{profile.first_name}}'s Friends</h3>
-            {{profile.get_friends}}
-            {{profile.get_friend_suggestions}}
-    </div>
+    
 </div>
 <div class="item">
         <h3>Statuses</h3>
