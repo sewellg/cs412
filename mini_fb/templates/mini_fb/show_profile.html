@@ -8,6 +8,7 @@ Description: extends base.html and shows a singular profile -->
 <div>
     <h1 style="text-align: center;">{{profile.first_name}} {{profile.last_name}}</h1>
     {% if request.user == profile.user %}
+    <!-- show these urls if it is the user's profile ONLY -->
     <a href="{% url 'create_status' %}" style="text-align: center;">Create Status</a><br>
     <a href="{% url 'update_profile' %}" style="text-align: center;">Update Profile</a><br>
     <a href="{% url 'show_friend_suggestions' %}">Friend Suggestions</a><br>
@@ -57,6 +58,7 @@ Description: extends base.html and shows a singular profile -->
                     {% endfor %}
                     - {{status.timestamp}}<br>
                     {% if request.user == profile.user %}
+                    <!-- ensures that the statuses can only be updated or deleted by their own user -->
                     <a href="{% url 'delete_status' status.pk %}"><input type="button" name="delete" value="Delete"></a>
                     <a href="{% url 'update_status' status.pk %}"><input type="button" name="update" value="Update"></a>
                     {% endif %}

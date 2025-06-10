@@ -1,3 +1,7 @@
+<!-- # File: news_feed.html
+# Author: Grace Sewell, gsewell@bu.edu, 6/10/25
+# Description: displays all of self and friends' statuses -->
+
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
@@ -5,6 +9,7 @@
     <br>
     <a href="{% url 'show_profile' profile.pk %}">Go Back to Profile</a>
     <ul>
+        <!-- loop over all statuses from self and friends -->
         {% for status in profile.get_news_feed %}
             <li><strong>{{status.message}}</strong><br>                    
                 {% for img in status.get_images %}

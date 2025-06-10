@@ -43,6 +43,7 @@ class ShowProfilePageView(DetailView):
         return reverse('login') 
     
     def get_object(self):
+        '''returns specified object, in this case: current user'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
@@ -53,36 +54,24 @@ class CreateProfileView(CreateView):
     template_name = 'mini_fb/create_profile_form.html'
 
     def get_context_data(self, **kwargs):
+        '''retrieves context data for view'''
         context = super().get_context_data(**kwargs)
+        # add new context variable
         context['new_user_form'] = UserCreationForm
         return context
     def form_valid(self, form):
         '''
         Handle the form submission to create a new Article object.
         '''
-        # find the logged in user
-        
-
-        print('request', self.request.POST)
         if form.is_valid():
-            print('form', form.errors)
-
+            # if the form is valid, create a variable with the form data
             user_form = UserCreationForm(self.request.POST)
             if user_form.is_valid():
+                # if the user form is valid, save as a new user and login
+                new_user = user_form.save()
+                login(self.request, new_user)
+                form.instance.user = new_user
                 print("form", user_form)
-            else:
-                print("form errors:", user_form.errors)
-
-            new_user = user_form.save()
-            
-
-            login(self.request, new_user)
-
-            form.instance.user = new_user
-        else:
-            print('form.errors', form.errors)
-        # attach user to form instance (Article object):
-
         return super().form_valid(form)
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     '''view to handle creation of status messages'''
@@ -124,6 +113,7 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
@@ -135,11 +125,13 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         return reverse('show_profile', kwargs={'pk':pk})
     
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    '''updates the logged in profile'''
     model=Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
 
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
@@ -164,10 +156,12 @@ class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     context_object_name = 'delete_status'
 
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
     def get_success_url(self):
+        '''directs user to a url upon successfully submitting'''
         pk = self.kwargs['pk']
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
     
@@ -187,16 +181,19 @@ class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
         return super().form_valid(form)
     
 class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
+    '''updates a status message instance'''
     model = StatusMessage
     form_class = UpdateStatusForm
     template_name = 'mini_fb/update_status_form.html'
     context_object_name = 'update_status'
 
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
     def get_success_url(self):
+        '''directs uset to a specific url upon successful submission'''
         pk = self.kwargs['pk']
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
     
@@ -216,8 +213,9 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
     
 class AddFriendView(View):
-
+    '''view to add a new friend relation object'''
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
@@ -228,21 +226,25 @@ class AddFriendView(View):
         return redirect(reverse('show_profile'))
     
 class ShowFriendSuggestionsView(DetailView):
+    '''view to show all friend suggestions, ie. profiles the user is not friends with'''
     model = Profile
     template_name = "mini_fb/friend_suggestions.html"
     context_object_name = "profile"
 
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     
 
 class ShowNewsFeedView(DetailView):
+    '''shows all status messages from self and friends'''
     model = Profile
     template_name = "mini_fb/news_feed.html"
     context_object_name = "profile"
 
     def get_object(self):
+        '''returns an instance of a model'''
         current_user = Profile.objects.get(user=self.request.user)
         return current_user
     

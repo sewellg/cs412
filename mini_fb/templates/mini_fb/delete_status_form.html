@@ -1,3 +1,7 @@
+<!-- # File: delete_status_form.html
+# Author: Grace Sewell, gsewell@bu.edu, 6/10/25
+# Description: form to delete a user's status -->
+
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
@@ -6,7 +10,8 @@
 
     <form action="{% url 'delete_status' delete_status.pk %}" method="POST">
         {% csrf_token %} 
-        <li>{{delete_status.message}}<br>                    
+        <li>{{delete_status.message}}<br>  
+            <!-- display status to be deleted -->
             {% for img in delete_status.get_images %}
                 <img src="{{img.image.image_file.url}}" style="width:100px"> <br>
             {% endfor %}
@@ -14,6 +19,7 @@
             </li>
         <input type="submit" name="delete" value="Yes">
     </form>
+    <!-- if user decides to not delete status, simply bring them to the profile page -->
     <form action="{% url 'show_profile' delete_status.profile.pk %}" method="GET">
         <input type="submit" name="cancel" value="No">
     </form>
