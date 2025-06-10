@@ -4,6 +4,7 @@
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -16,6 +17,7 @@ class Profile(models.Model):
     city = models.CharField(blank=True)
     email_address = models.EmailField()
     profile_image_url = models.URLField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_status_messages(self):
         '''filters all status messages by their profile'''

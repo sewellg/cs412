@@ -12,9 +12,25 @@ Description: base for mini_fb. includes header and style info -->
     <body>
         <header>
             <h1>Mini Facebook</h1>
+            <!-- urls for not logged in users -->
             <nav><a href="{% url 'show_all_profiles' %}">Home</a></nav>
             <nav><a href="{% url 'create_profile' %}">Create Profile</a></nav>
-            <br>
+            <!-- Add: URLs for authentication -->
+            <hr>
+            {% if request.user.is_authenticated %}
+                <h4>Logged in as: {{request.user}}</h4> 
+                <a href="{% url 'show_profile' %}">My Profile</a>
+                <br><br>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Log out</button>
+                </form>
+            {% else %}
+                <h4>Logged out.</h4>
+                <li><a href="{% url 'login' %}">Log in</a></li>
+                <br>
+            {% endif %}
+
         </header>
 
          {% block content %}
