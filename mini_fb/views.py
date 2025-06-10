@@ -8,6 +8,8 @@ from .models import *
 from .forms import *
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
 # Create your views here.
@@ -50,6 +52,38 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['new_user_form'] = UserCreationForm
+        return context
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new Article object.
+        '''
+        # find the logged in user
+        
+
+        print('request', self.request.POST)
+        if form.is_valid():
+            print('form', form.errors)
+
+            user_form = UserCreationForm(self.request.POST)
+            if user_form.is_valid():
+                print("form", user_form)
+            else:
+                print("form errors:", user_form.errors)
+
+            new_user = user_form.save()
+            
+
+            login(self.request, new_user)
+
+            form.instance.user = new_user
+        else:
+            print('form.errors', form.errors)
+        # attach user to form instance (Article object):
+
+        return super().form_valid(form)
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     '''view to handle creation of status messages'''
 
@@ -191,7 +225,7 @@ class AddFriendView(View):
         profile1 = Profile.objects.get(user=self.request.user)
         profile2 = Profile.objects.get(pk=self.kwargs['other_pk'])
         profile1.add_friend(profile2)
-        return redirect(reverse('show_profile', kwargs={'pk': self.kwargs['pk']}))
+        return redirect(reverse('show_profile'))
     
 class ShowFriendSuggestionsView(DetailView):
     model = Profile
@@ -207,7 +241,7 @@ class ShowNewsFeedView(DetailView):
     model = Profile
     template_name = "mini_fb/news_feed.html"
     context_object_name = "profile"
-    
+
     def get_object(self):
         current_user = Profile.objects.get(user=self.request.user)
         return current_user

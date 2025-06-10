@@ -4,13 +4,22 @@
 <div>
     <h1>Create New Profile</h1>
 
+    <h4>First, create a new user.</h4>
     <form action="{% url 'create_profile' %}" method="POST">
         {% csrf_token %} 
+        <table>
+            <!-- display the form as a neat table -->
+            {{new_user_form.as_table}}
+        </table>
+        <!-- <input type="submit" name="submit" value="Submit"> -->
+    <hr>
+    <h4>Then, create your profile.</h4>
         <table>
             <!-- display the form as a neat table -->
             {{form.as_table}}
         </table>
         <input type="submit" name="submit" value="Submit">
     </form>
+    
 </div>
 {% endblock %}
