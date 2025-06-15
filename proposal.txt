@@ -1,0 +1,26 @@
+Grace Sewell
+gsewell@bu.edu
+6/10/25
+
+For my final project, I will be creating a "Music Taste Profile" website. The website will allow users to 
+create playlists, find song recommendations, add friends with similar tastes, and ideally will also include
+a music player at the bottom of the page (similar to Spotify). Ideally, the webapp will use Spotify's API
+to prepopulate the database with songs. The webapp will require user/profile creation, and therefore the 
+start page will be a login page. It will require the following models and relationships:
+
+Profiles:
+    - User (fk to users via django admin)
+    - profile_pic (image)
+    - first_name (text)
+    - last_name (text)
+    - fav_genre (fk to genre)
+    - fav_song (fk to song)
+    - fav_artist (fk to artist)
+Genres:
+    - genre_name (text)
+Songs:
+    - song_name (text)
+    - artist (fk to artist)
+Artists:
+    - name (text)
+    - genre (fk to genre)
