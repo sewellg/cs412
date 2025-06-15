@@ -1,0 +1,42 @@
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+
+<div class="row">
+    <h4>Name</h4>
+    {{voter.first_name}} {{voter.last_name}}
+
+    <h4>Address</h4>
+    <a href="https://www.google.com/maps?q={{voter.residential_address_street_number}}+{{voter.residential_address_street_name}}+newton+ma" target="_blank">
+    {{voter.residential_address_street_number}} {{voter.residential_address_street_name}}, {{voter.residential_address_apartment_number}}, Newton, MA 0{{voter.residential_address_zip_code}}
+    </a>
+
+    <h4>Date of Birth</h4>
+    {{voter.date_of_birth}}
+
+    <h4>Date of Registration</h4>
+    {{voter.date_of_registration}}
+
+    <h4>Party Affiliation</h4>
+    {{voter.party_affiliation}}
+
+    <h4>Voter Score</h4>
+    {{voter.voter_score}}
+
+    <h4>'20 State Election</h4>
+    {{voter.v20state}}
+
+    <h4>'21 Town Election</h4>
+    {{voter.v21town}}
+
+    <h4>'21 Primary Election</h4>
+    {{voter.v21primary}}
+
+    <h4>'22 General Election</h4>
+    {{voter.v22general}}
+
+    <h4>'23 Town Election</h4>
+    {{voter.v23town}}
+
+        </div>
+
+{% endblock %}

@@ -2,10 +2,10 @@ Grace Sewell
 gsewell@bu.edu
 6/10/25
 
-For my final project, I will be creating a "Music Taste Profile" website. The website will allow users to 
-create playlists, find song recommendations, add friends with similar tastes, and ideally will also include
-a music player at the bottom of the page (similar to Spotify). Ideally, the webapp will use Spotify's API
-to prepopulate the database with songs. The webapp will require user/profile creation, and therefore the 
+For my final project, I will be creating a "Squishmallow Collection" website. The website will allow users to 
+have a collection displaying all of the Squishmallows they own, find recommendations based on what they don't yet have, 
+add friends, as well as list Squishmallows for selling and earn special badges. Instead of using an API I will be prepopulating a database
+with Squishmallows. The webapp will require user/profile creation, and therefore the 
 start page will be a login page. It will require the following models and relationships:
 
 Profiles:
@@ -13,14 +13,17 @@ Profiles:
     - profile_pic (image)
     - first_name (text)
     - last_name (text)
-    - fav_genre (fk to genre)
-    - fav_song (fk to song)
-    - fav_artist (fk to artist)
-Genres:
-    - genre_name (text)
-Songs:
-    - song_name (text)
-    - artist (fk to artist)
-Artists:
+    - fav_squish (fk to Squishmallow)
+Squishmallows:
     - name (text)
-    - genre (fk to genre)
+    - type (text)
+    - size (integer)
+    - birthday (datetime)
+    - collected_date (datetime)
+Listings:
+    - owner (fk to Profile)
+    - squishmallow (fk to Squishmallow) 
+    - price (integer)
+Badges:
+    - badge_name (text)
+    - badge_holder (fk to Profile)

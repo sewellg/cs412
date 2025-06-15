@@ -39,8 +39,13 @@
     
             {% for r in voters %}
             <tr>
-                <td>{{r.first_name}} {{r.last_name}}</td>
-                <td>{{r.residential_address_street_number}} {{r.residential_address_street_name}}, {{r.residential_address_apartment_number}}, 0{{r.residential_address_zip_code}}</td>
+                <td><a href="{% url 'voter' r.pk %}">{{r.first_name}} {{r.last_name}}</a></td>
+                <td>{{r.residential_address_street_number}} 
+                    {{r.residential_address_street_name}}, 
+                    {% if r.residential_address_apartment_number != '0' %}
+                        UNIT {{r.residential_address_apartment_number}}, 
+                    {% endif %}
+                    NEWTON, MA 0{{r.residential_address_zip_code}}</td>
                 <td>{{r.date_of_birth}}</td>
                 <td>{{r.party_affiliation}}</td>
                 <td>{{r.voter_score}}</td>
