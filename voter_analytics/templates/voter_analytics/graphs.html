@@ -1,0 +1,23 @@
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    {% include "voter_analytics/graph_search.html" %}    
+</div>
+<div class="container">
+    
+    <div class="row">
+        {{graph1_div_splits|safe}}
+    </div>
+
+
+    <div class="row">
+        {{graph2_div_splits|safe}}
+    </div>
+
+    <div class="row">
+        {{graph3_div_splits|safe}}
+    </div>
+</div>
+{% endblock %}

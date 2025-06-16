@@ -7,7 +7,12 @@
 
     <h4>Address</h4>
     <a href="https://www.google.com/maps?q={{voter.residential_address_street_number}}+{{voter.residential_address_street_name}}+newton+ma" target="_blank">
-    {{voter.residential_address_street_number}} {{voter.residential_address_street_name}}, {{voter.residential_address_apartment_number}}, Newton, MA 0{{voter.residential_address_zip_code}}
+        {{voter.residential_address_street_number}} 
+        {{voter.residential_address_street_name}}, 
+        {% if voter.residential_address_apartment_number != '0' %}
+            UNIT {{voter.residential_address_apartment_number}}, 
+        {% endif %}
+        NEWTON, MA 0{{voter.residential_address_zip_code}}
     </a>
 
     <h4>Date of Birth</h4>
