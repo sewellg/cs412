@@ -2,20 +2,25 @@
 
 {% block content %}
 
+<!-- displays form for creating a new form -->
 <div>
     <h1>Create New Profile</h1>
 
     <h4>First, create a new user.</h4>
+    <!-- the line below will display any errors if the user tries to submit invalid info -->
     {{new_user_form.non_field_errors}}
     <form action="{% url 'create_profile' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
+            <!-- display form as a neat table -->
             {{new_user_form.as_table}}
         </table>
     <hr>
     <h4>Next, create your profile.</h4>
+        <!-- the line below will display any errors if the user tries to submit invalid info -->
         {{form.non_field_errors}}
         <table>
+            <!-- display a form as a neat table -->
             {{form.as_table}}
         </table>
         <input type="submit" name="submit" value="Submit">

@@ -2,12 +2,14 @@
 
 {% block content %}
 
+<!-- page to display form for adding a photo of a squishmallow -->
 <div>
     <h4>Add a photo of your squish!</h4>
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
+            <!-- display form as a neat table -->
             {{form.as_table}}
         </table>
         <input type='submit' name = 'Add Photo' value= 'Add Photo'>

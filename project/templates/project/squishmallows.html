@@ -1,9 +1,11 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
+<!-- displays all squishmallows in database -->
 <h1 class="header">Master List of Squishmallows</h1>
 
 <form method="get" action="{% url 'master' %}" class="header">
+  <!-- search form to find specific squishmallows -->
   <input
     type="text"
     name="q"
@@ -14,16 +16,20 @@
 </form>
 
 <div class="collection-grid">
+  <!-- for loop to iterate over all squishmallows -->
   {% for squish in squishmallows %}
     <div class="master-col">
       <h3>{{ squish.name }} the {{ squish.species }}</h3>
 
       {% if request.user.is_authenticated %}
+      <!-- if the user is logged in, let them add squish to their collection -->
         <form method="post" action="{% url 'add_squish' squish.id %}">
+          <!-- form for adding squish to collection -->
           {% csrf_token %}
           <button type="submit" class="action-button">Add to Collection</button>
         </form>
       {% else %}
+      <!-- if not logged in, tell them to log in to add and link to login page -->
         <a href="{% url 'login' %}?next={% url 'master' %}" class="action-button">
           Log in to add
         </a>
@@ -32,38 +38,43 @@
   {% endfor %}
 </div>
 
-
+<!-- pagination rules -->
 {% if is_paginated %}
-  <ul class="pagination">
-    {% if page_obj.number > 1 %}
-      <li><a href="?page=1">First</a></li>
-    {% endif %}
+        <ul class="pagination">
+            {% if page_obj.number > 1 %}
+                <!-- if the page the user is on is greater than 1, show them a button for navigating to first page -->
+                <li><a href="?page=1">First</a></li>
+            {% endif %}
 
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-    {% endif %}
+            {% if page_obj.has_previous %}
+                <!-- also if it is not the first page, show them a button for the previous page -->
+                <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
 
-    {% for num in paginator.page_range %}
-      {% if num == 1 or num == paginator.num_pages or num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
-        {% if num == page_obj.number %}
-          <li><strong>{{ num }}</strong></li>
-        {% else %}
-          <li><a href="?page={{ num }}">{{ num }}</a></li>
-        {% endif %}
-      {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
-        <li>...</li>
-      {% endif %}
-    {% endfor %}
+            {% for num in paginator.page_range %}
+            <!-- loops for determining which page numbers to show based on which page user is on currently -->
+                {% if num == 1 or num == paginator.num_pages or num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                    {% if num == page_obj.number %}
+                    <li><strong>{{ num }}</strong></li>
+                    {% else %}
+                    <li><a href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                    <li>...</li>
+                {% endif %}
+            {% endfor %}
 
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
-    {% endif %}
+            {% if page_obj.has_next %}
+                <!-- show a next page button if not on the last page -->
+                <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% endif %}
 
-    {% if page_obj.number < paginator.num_pages %}
-      <li><a href="?page={{ paginator.num_pages }}">Last</a></li>
+            {% if page_obj.number < paginator.num_pages %}
+                <!-- if not on the last page, show a button for the last page -->
+                <li><a href="?page={{ paginator.num_pages }}">Last</a></li>
+            {% endif %}
+        </ul>
     {% endif %}
-  </ul>
-{% endif %}
 
 
 

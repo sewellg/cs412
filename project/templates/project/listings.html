@@ -1,35 +1,59 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
+<!-- a page to display all available squishmallow listings -->
 
 <div class="profile-header">
     <h2>Listings</h2>
 </div>
+
 <div class="collection-grid">
+        <!-- iterate thru all listings -->
         {% for item in listings %}
         <div class="collection-col">
+            <!-- use class collection-col to display them in nice boxes consistent with rest of pages -->
             <p>Owner: {{item.owner.first_name}} {{item.owner.last_name}}</p>
             <p>Squish: {{item.squishmallow.name}} the {{item.squishmallow.species}}</p>
             <p>Price: ${{item.price}}</p>
             <p><a href="{% url 'show_listing' item.pk %}">View Listing</a></p>
         </div>
         {% endfor %}
+    <!-- pagination to allow for multiple pages of listings. -->
     {% if is_paginated %}
         <ul class="pagination">
+            {% if page_obj.number > 1 %}
+                <!-- if the page the user is on is greater than 1, show them a button for navigating to first page -->
+                <li><a href="?page=1">First</a></li>
+            {% endif %}
+
             {% if page_obj.has_previous %}
-                <li>
-                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
-                
-                </li>
+                <!-- also if it is not the first page, show them a button for the previous page -->
+                <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
             {% endif %}
-                <li class="">
-                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
-                </li>
+
+            {% for num in paginator.page_range %}
+            <!-- loops for determining which page numbers to show based on which page user is on currently -->
+                {% if num == 1 or num == paginator.num_pages or num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                    {% if num == page_obj.number %}
+                    <li><strong>{{ num }}</strong></li>
+                    {% else %}
+                    <li><a href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                    <li>...</li>
+                {% endif %}
+            {% endfor %}
+
             {% if page_obj.has_next %}
-                <li>
-                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
-                </li>
+                <!-- show a next page button if not on the last page -->
+                <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
             {% endif %}
-            </ul>
+
+            {% if page_obj.number < paginator.num_pages %}
+                <!-- if not on the last page, show a button for the last page -->
+                <li><a href="?page={{ paginator.num_pages }}">Last</a></li>
+            {% endif %}
+        </ul>
     {% endif %}
+
 {% endblock %}

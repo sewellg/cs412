@@ -12,12 +12,14 @@
                 <p>
                     {% if profile.profile_pic %}
                     <a href="{% url 'profile' profile.pk %}">
+                        <!-- can also use profile pic to click to bring to profile page -->
                         <img src="{{profile.profile_pic.url}}" style="width:200px;height:200px">
                     </a>
                     {% endif %}
                 </p>
                 <p>
                     <a href="{% url 'profile' profile.pk %}">
+                        <!-- profile name display will link to their profile page -->
                         <h3>{{profile.first_name}} {{profile.last_name}}</h3>
                     </a>
                     <p></p>

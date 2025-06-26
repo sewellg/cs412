@@ -1,3 +1,9 @@
+html {
+  background-color: #E5989B;
+  color: #433f48;
+  font-family: 'Borel';
+}
+
 .profile_info {
   display: flex;
   align-items: center;
@@ -76,11 +82,6 @@
 .navigation a:hover,
 .nav-link-button:hover {
   background-color: #B5838D;
-  color: #433f48;
-}
-
-html {
-  background-color: #E5989B;
   color: #433f48;
 }
 

@@ -1,7 +1,10 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
+<!-- display a user's profile -->
+
 <div class="profile-header">
+    <!-- header include the profile pic (if available), name, and fav squish -->
         {% if profile.profile_pic %}
             <img src="{{profile.profile_pic.url}}" alt="Profile Picture" class="profile">
         {% endif %}
@@ -13,56 +16,70 @@
         <h4>Favorite Squish: <br>
             {{profile.fav_squish.name}} the {{profile.fav_squish.species}}</h4>
 </div>
-<div class="collection-grid">
-    
+<div class="collection-grid"> 
     <div class="collection-col">
+        <!-- a box with a small selection of user's squishmallows -->
         <h4>{{ profile.first_name }}'s Squishmallows</h4>
 
         {% for squish in profile.get_collection.squishmallows.all|slice:":5" %}
+        <!-- does not show more than five squishmallows -->
             <p>{{ squish.name }} the {{ squish.species }}</p>
         {% endfor %}
 
         {% if profile.get_collection.squishmallows.count > 5 %}
+        <!-- if there are more than five squishmallows, add ellipses and link to their full collection -->
             <p>...</p>
             <a href="{% url 'collection' profile.pk %}">View More</a>
         {% elif profile.get_collection.squishmallows.count == 0 %}
+        <!-- if there are NO squishmallows -->
             <p>No squishes yet.
                 {% if request.user.is_authenticated and profile.user.id == request.user.id %}
-                Add new squishes <a href="{% url 'master' %}">here.</a>
+                    <!-- if the page is the logged in user's profile allow them to add more squishes from the master list -->
+                    Add new squishes <a href="{% url 'master' %}">here.</a>
                 {% endif %}
             </p>
         {% else %}
+            <!-- in any other case, still show a link to view their collection  -->
             <a href="{% url 'collection' profile.pk %}">View Collection</a>
         {% endif %}
     </div>
 
     <div class="collection-col">
+        <!-- a box for all the user's badges. this cannot be modified by anyone and badges are awarded by number of squishmallows -->
         <h4>Badges:</h4>
         {% for badge in profile.badges.all %}
             <p>{{ badge.badge_name }}</p>
         {% empty %}
+        <!-- display if no badges are available -->
             <p>No badges yet.</p>
         {% endfor %}
     </div>
     <div class="listing-col">
+        <!-- display all the user's listings (up to 5) -->
         <h4>
             {% if profile.get_listings.count <= 5 %}
-            <a href="{% url 'profile_listings' profile.pk %}">{{ profile.first_name }}'s Listings</a>
+            <!-- add a link to view all listings if there are less than 5 -->
+                <a href="{% url 'profile_listings' profile.pk %}">{{ profile.first_name }}'s Listings</a>
             {% else %}
-            {{profile.first_name}}'s listings
+                {{profile.first_name}}'s Listings
             {% endif %}
         </h4>
 
         {% for listing in profile.get_listings.all|slice:":5" %}
+        <!-- display 5 listings only -->
             <p>{{ listing.squishmallow.name }} the {{ listing.squishmallow.species }} - ${{listing.price}}</p>
         {% endfor %}
         
 
         {% if profile.get_listings.count > 5 %}
             <p>...</p>
+            <!-- add a view more button if there are more than five listings -->
             <a href="{% url 'profile_listings' profile.pk %}">View More</a>
         {% elif profile.get_listings.count == 0 %}
-            <p>No listings yet. {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+        <!-- if no listings, show that -->
+            <p>No listings yet. 
+                {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                <!-- and allow user to add more listings from their collection if signed in -->
                 Add new listings <a href="{% url 'collection' profile.pk %}">here.</a>
                 {% endif %}
             </p>
@@ -70,11 +87,13 @@
     </div>
 </div>
 <div style="text-align: center;">
+    <!-- link to update profile if user is logged in -->
     {% if request.user.is_authenticated and profile.user.id == request.user.id %}
         <p><a href="{% url 'update_profile' profile.pk %}">Update my profile.</a></p>
     {% endif %}
 </div>
 <div style="text-align: center;">
+    <!-- link to delete profile if user is logged in -->
     {% if request.user.is_authenticated and profile.user.id == request.user.id %}
         <p><a href="{% url 'delete_profile' profile.pk %}">Delete my profile.</a></p>
     {% endif %}

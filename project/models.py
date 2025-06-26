@@ -13,23 +13,27 @@ class Squishmallow(models.Model):
 
     name = models.TextField()
     species = models.TextField()
-    # collected_date = models.DateField(blank=True)
 
     def __str__(self):
+        '''returns string representation of object'''
         return f"{self.name} the {self.species}"
 
     def load_data():
+        '''function to load data from a txt file to generate a database of squishmallow objects'''
         import re
 
         filename = "/Users/gsewe/django/squishmallows.txt"
         with open(filename, 'r', encoding='utf-8') as f:
+            # read every line in file
             lines = f.readlines()
 
         for line in lines:
             line = line.strip()
             match = re.match(r'^(.+?) the (.+)$', line)
+            # strip and match them to the format "name" the "species"
             if match:
                 name, species = match.groups()
+                # create a new squishmallow object with this info and save it
                 squishmallow = Squishmallow(
                                             name = name,
                                             species = species
@@ -44,6 +48,7 @@ class Badge(models.Model):
     badge_name = models.TextField()
 
     def __str__(self):
+        '''returns string representation of badge object'''
         return f"{self.badge_name} Badge"
     
 class Profile(models.Model):
@@ -57,6 +62,7 @@ class Profile(models.Model):
     badges = models.ManyToManyField(Badge, blank=True)
 
     def __str__(self):
+        '''returns string representation of object'''
         return f"{self.first_name} {self.last_name}"
     
     def get_collection(self):
@@ -73,14 +79,18 @@ class Profile(models.Model):
         return reverse('my_profile')
     
     def add_squish(self, squishmallow):
+        '''adds a certain squishmallow to user's collection'''
         self.user.collection.squishmallows.add(squishmallow)
     
     def get_photos(self, squish):
+        '''obtains all squishphoto objects belonging to the user'''
         qs = SquishPhoto.objects.filter(squish=squish).filter(profile=self)
         return qs
 
     def check_badges(self):
+        '''checking to see if user has any badges'''
         count = self.user.collection.squishmallows.count()
+        # adding specific badges based on user's number of squishmallows
         if count >= 5:
             newcomer_badge = Badge.objects.get(badge_name='Newcomer')
             if newcomer_badge not in self.badges.all():
@@ -103,11 +113,13 @@ class Profile(models.Model):
                 self.badges.add(god_badge)
 
 class Listing(models.Model):
+    '''class for a listing of a squishmallow'''
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     squishmallow = models.ForeignKey(Squishmallow, on_delete=models.CASCADE)
     price = models.IntegerField(blank=False)
 
     def __str__(self):
+        '''returns string representation of a listing'''
         return f"{self.owner.first_name} {self.owner.last_name}'s Listing"
     
     def get_absolute_url(self):
@@ -122,6 +134,7 @@ class Collection(models.Model):
     squishmallows = models.ManyToManyField(Squishmallow, blank=True)
 
     def __str__(self):
+        '''returns string representation of a collection'''
         return f"{self.user.username}'s Collection"
     
 class SquishPhoto(models.Model):
@@ -131,7 +144,9 @@ class SquishPhoto(models.Model):
     photo = models.ImageField()
 
     def __str__(self):
+        '''returns string representation of a squishphoto'''
         return f"{self.profile.first_name}'s {self.squish.name}"
     
     def get_absolute_url(self):
+        '''upon successfully adding photo, return to user's collection'''
         return reverse('collection', kwargs={'pk':self.profile.pk})

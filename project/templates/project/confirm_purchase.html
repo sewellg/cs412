@@ -1,5 +1,5 @@
 {% extends 'project/base.html' %}
-
+<!-- confirmation page to ensure the user really wants to buy a given squishmallow -->
 <div>
     <h4>Confirm Purchase</h4>
     <div>
@@ -7,7 +7,8 @@
         <form method="post">
             {% csrf_token %}
             <button type="submit">Yes, Buy It</button>
-            <a href="{% url 'show_listing' listing.pk %}">Cancel</a>
+            <!-- if they don't, bring them back to the listing -->
+            <a href="{% url 'show_listing' listing.pk %}">Cancel</a> 
         </form>
     </div>
 </div>

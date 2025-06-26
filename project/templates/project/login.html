@@ -1,16 +1,17 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-
+<!-- display login form -->
 <h1>Login</h1>
 <form method="post" action="{% url 'login' %}" >
     {% csrf_token %}
     {{form}}
     <input type="submit" value="Login">
     {% if request.GET.next %}
-    <input type="hidden" name="next" value="{{request.GET.next}}">
+        <input type="hidden" name="next" value="{{request.GET.next}}">
     {% endif %}
 </form>
 
+<!-- give option to register if no profile created -->
 <h4>No profile yet? Click <a href="{% url 'create_profile' %}">here</a> to register.</h4>
 {% endblock %}

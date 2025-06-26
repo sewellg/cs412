@@ -6,19 +6,21 @@
 </div>
 <div class="collection-grid">
     <div class="collection-col"> 
+    <!-- make a neat box for every listing -->
     <div>
         <p>Squish for sale: {{listing.squishmallow.name}} the {{listing.squishmallow.species}}</p>
         <p>Price: ${{listing.price}}</p>
     </div>
     <div>
-    <form method="post" action="{% url 'confirm_purchase' listing.pk %}">
-    {% csrf_token %}
-    {% if request.user.id != listing.owner.user.id %}
-        <button type="submit">Buy This Squishmallow</button>
-    {% else %}
-        <button type="submit" disabled>You own this.</button>
-    {% endif %}
-    </form>
+        <!-- allow buying of listing with the logic that only a logged in user separate from the owner can buy -->
+        <form method="post" action="{% url 'confirm_purchase' listing.pk %}">
+        {% csrf_token %}
+        {% if request.user.id != listing.owner.user.id and request.user.is_authenticated %}
+            <button type="submit">Buy This Squishmallow</button>
+        {% elif request.user.id == listing.owner.user.id %}
+            <button type="submit" disabled>You own this.</button>
+        {% endif %}
+        </form>
     </div>
     </div>
 </div>

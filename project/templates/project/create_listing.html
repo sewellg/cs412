@@ -2,13 +2,15 @@
 
 {% block content %}
 
+<!-- page to create a new listing -->
 <div>
     <h1>Create New Listing</h1>
 
     <form method="POST">
         {% csrf_token %}
         <table>
-            {{form.as_table}}
+            <!-- displaying the listing creation form as a neat table -->
+            {{form.as_table}} 
         </table>
         <input type='submit' name = 'Add Listing!' value= 'Add Listing!'>
     </form>

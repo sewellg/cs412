@@ -1,33 +1,39 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-
+<!-- page to display all listings for a given profile -->
 <h2 class="header">{{profile.first_name}}'s Listings</h2>
 
 <div>
     {% if profile.get_listings.count == 0 %}
+    <!-- if there are no listings -->
         <p>There's nothing here!</p>
         {% if request.user.is_authenticated and profile.user.id == request.user.id %}
-        <p><a href="{% url 'collection' profile.pk %}">Add a Listing here.</a></p>
+            <!-- if the user is logged in, direct them to their collection if they want to add a listing -->
+            <p><a href="{% url 'collection' profile.pk %}">Add a Listing here.</a></p>
         {% endif %}
     {% endif %}
     
 </div>
 
 <div class="collection-grid">
+    <!-- loop over all listings and print out their information in a neat box -->
     {% for item in listings %}
         <div class="collection-col">
             <h4>Squish for sale: {{item.squishmallow.name}} the {{item.squishmallow.species}}</h4>
             <p>Price: ${{item.price}}</p>
             <div>
-                <form method="post" action="{% url 'confirm_purchase' item.pk %}">
-                {% csrf_token %}
-                {% if request.user.id != item.owner.user.id %}
-                    <button type="submit">Buy This Squishmallow</button>
-                {% else %}
-                    <button type="submit" disabled>You own this.</button>
-                {% endif %}
-                </form>
+                {% if request.user.is_authenticated %}
+                <!-- if user is logged in, allow them to buy the squishmallow -->
+                    <form method="post" action="{% url 'confirm_purchase' item.pk %}">
+                    {% csrf_token %}
+                    {% if request.user.id != item.owner.user.id %}
+                        <button type="submit">Buy This Squishmallow</button>
+                    {% else %}
+                        <!-- if they are the owner, do not let them buy their own squishmallow -->
+                        <button type="submit" disabled>You own this.</button>
+                    {% endif %}
+                    </form>
             </div>
         </div>
 

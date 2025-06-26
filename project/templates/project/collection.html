@@ -1,20 +1,25 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
+<!-- page to display a user's collection -->
 
 <h2 class="header">{{profile.first_name}}'s Squishmallow Collection</h2>
 
 <div class="collection-grid">
+    <!-- handling if the user has no squishmallows in collection -->
     {% if profile.get_collection.squishmallows.count == 0 %}
         <p>There's nothing here!</p>
             {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                <!-- only allow user to add squishmallows to the collection if it is THEIR collection -->
                 <p><a href="{% url 'master' %}">Add your squishes here.</a></p>
             {% endif %}
     {% endif %}
 
     {% for squish in squishmallows %}
+        <!-- iterate over all squishmallows in the collection and put each one in its own div -->
         <div class="collection-col">
             {% if squish.photos %}
+                <!-- checking to see if there is a photo attached to the squishmallow -->
                 {% for img in squish.photos %}
                     <img src="{{img.photo.url}}">
                 {% endfor %}
@@ -22,16 +27,13 @@
 
             <h4>{{squish.name}} the {{squish.species}}</h4>
             {% if request.user.is_authenticated and profile.user.id == request.user.id %}
-
-                {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+            <!-- if this is the logged in user's collection and there are no photos, give them the ability to add a photo or list the squishmallow -->
                 <div class="button-group">
                     {% if not squish.photos %}
                     <a href="{% url 'add_photo' %}?squish_id={{ squish.id }}" class="action-button">Add Photo</a>
                     {% endif %}
                     <a href="{% url 'create_listing' %}?squish_id={{ squish.id }}" class="action-button">List Squishmallow</a>
                 </div>
-                {% endif %}
-
             {% endif %}
         </div>
 

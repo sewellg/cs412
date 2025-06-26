@@ -2,14 +2,16 @@
 
 {% block content %}
 
+<!-- displays form for deleting a profile -->
 <div>
     <h4>Are you sure you want to delete your profile?</h4>
+    <!-- form for deletion -->
     <form action="{% url 'delete_profile' profile.pk %}" method="POST">
         {% csrf_token %} 
         <input type="submit" name="delete" value="Yes">
     </form>
-    <!-- if user decides to not delete status, simply bring them to the profile page -->
-    <form action="{% url 'my_profile'%}" method="GET">
+    <!-- if user decides to not delete status, simply bring them to their own profile page -->
+    <form action="{% url 'my_profile' %}" method="GET">
         <input type="submit" name="cancel" value="No">
     </form>
 </div>
