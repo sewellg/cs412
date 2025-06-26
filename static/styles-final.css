@@ -231,3 +231,17 @@ hr {
   height: 2px;           /* Thickness */
   background-color: #433f48; /* Your desired color */
 }
+
+.disabled-button {
+  background-color: #B5838D;
+  text-decoration: none;
+  color: #433f48;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  display: inline-block;
+  cursor: not-allowed;
+  pointer-events: none; /* disables hover/click */
+  font-family: 'Abhaya Libre', serif;
+  font-size: 1rem;
+}

@@ -32,7 +32,12 @@
                     {% if not squish.photos %}
                     <a href="{% url 'add_photo' %}?squish_id={{ squish.id }}" class="action-button">Add Photo</a>
                     {% endif %}
-                    <a href="{% url 'create_listing' %}?squish_id={{ squish.id }}" class="action-button">List Squishmallow</a>
+                        {% if squish.id in listed_ids %}
+                            <button class="disabled-button" disabled>Already Listed</button>
+                        {% else %}
+                            <a href="{% url 'create_listing' %}?squish_id={{ squish.id }}" class="action-button">List Squishmallow</a>
+                        {% endif %}
+
                 </div>
             {% endif %}
         </div>

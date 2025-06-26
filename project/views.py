@@ -123,6 +123,9 @@ class CollectionView(DetailView):
             squish.photos = SquishPhoto.objects.filter(squish=squish, profile=profile)
 
         context['squishmallows'] = squish_list
+
+        if self.request.user.is_authenticated:
+            context['listed_ids'] = list(profile.get_listed_squish_ids())
         return context
         
     

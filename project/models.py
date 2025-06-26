@@ -74,6 +74,10 @@ class Profile(models.Model):
         listings = Listing.objects.filter(owner=self)
         return listings
     
+    def get_listed_squish_ids(self):
+        '''gets ids of listed squishes'''
+        return Listing.objects.filter(owner=self).values_list('squishmallow__id', flat=True)
+    
     def get_absolute_url(self):
         '''return url to display one instance of model'''
         return reverse('my_profile')
