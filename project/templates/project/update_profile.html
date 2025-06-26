@@ -6,7 +6,7 @@
 <div>
     <h1>Update Profile</h1>
 
-    <form action="{% url 'update_profile' profile.pk %}" method="POST">
+    <form action="{% url 'update_profile' profile.pk %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %} 
         <table>
             <!-- display the form as a neat table -->
