@@ -1,0 +1,39 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Collect-A-Squish</title>
+        <link rel="stylesheet" href="{% static 'styles-final.css' %}">
+    </head>
+
+    <body>
+        <header>
+            <h1 class="header">Collect-A-Squish</h1>
+            <!-- include links for login and logout, with if loop -->
+            <ul class="navigation">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'my_profile' %}">My Profile</a></li>
+                    
+            {% else %}
+                <li><a href="{% url 'login' %}">Log in</a></li>
+            {% endif %}
+            <li><a href="{% url 'master' %}">Squishmallow Master List</a></li>
+            <li><a href="{% url 'show_all_profiles' %}">All Profiles</a></li>
+            <a href="{% url 'listings' %}">All Listings</a>
+            {% if request.user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'logout' %}" class="nav-form">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link-button">Log out</button>
+                </form>
+            </li>
+            {% endif %}
+            </ul>
+        </header>
+        <hr>
+
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

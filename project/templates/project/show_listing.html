@@ -1,0 +1,26 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="header">
+       <h4>{{listing.owner.first_name}} {{listing.owner.last_name}}'s Listing</h4>
+</div>
+<div class="collection-grid">
+    <div class="collection-col"> 
+    <div>
+        <p>Squish for sale: {{listing.squishmallow.name}} the {{listing.squishmallow.species}}</p>
+        <p>Price: ${{listing.price}}</p>
+    </div>
+    <div>
+    <form method="post" action="{% url 'confirm_purchase' listing.pk %}">
+    {% csrf_token %}
+    {% if request.user.id != listing.owner.user.id %}
+        <button type="submit">Buy This Squishmallow</button>
+    {% else %}
+        <button type="submit" disabled>You own this.</button>
+    {% endif %}
+    </form>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

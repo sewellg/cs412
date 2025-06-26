@@ -1,0 +1,13 @@
+{% extends 'project/base.html' %}
+
+<div>
+    <h4>Confirm Purchase</h4>
+    <div>
+        <p>Are you sure you would like to buy {{listing.squishmallow.name}} the {{listing.squishmallow.species}} for ${{listing.price}}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Buy It</button>
+            <a href="{% url 'show_listing' listing.pk %}">Cancel</a>
+        </form>
+    </div>
+</div>

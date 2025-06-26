@@ -1,0 +1,83 @@
+{% extends 'project/base.html' %}
+{% block content %}
+
+<div class="profile-header">
+        {% if profile.profile_pic %}
+            <img src="{{profile.profile_pic.url}}" alt="Profile Picture" class="profile">
+        {% endif %}
+        <h2>{{profile.first_name}} 
+            {% if profile.last_name %}
+                {{profile.last_name}}
+            {% endif %}
+        </h2>
+        <h4>Favorite Squish: <br>
+            {{profile.fav_squish.name}} the {{profile.fav_squish.species}}</h4>
+</div>
+<div class="collection-grid">
+    
+    <div class="collection-col">
+        <h4>{{ profile.first_name }}'s Squishmallows</h4>
+
+        {% for squish in profile.get_collection.squishmallows.all|slice:":5" %}
+            <p>{{ squish.name }} the {{ squish.species }}</p>
+        {% endfor %}
+
+        {% if profile.get_collection.squishmallows.count > 5 %}
+            <p>...</p>
+            <a href="{% url 'collection' profile.pk %}">View More</a>
+        {% elif profile.get_collection.squishmallows.count == 0 %}
+            <p>No squishes yet.
+                {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                Add new squishes <a href="{% url 'master' %}">here.</a>
+                {% endif %}
+            </p>
+        {% else %}
+            <a href="{% url 'collection' profile.pk %}">View Collection</a>
+        {% endif %}
+    </div>
+
+    <div class="collection-col">
+        <h4>Badges:</h4>
+        {% for badge in profile.badges.all %}
+            <p>{{ badge.badge_name }}</p>
+        {% empty %}
+            <p>No badges yet.</p>
+        {% endfor %}
+    </div>
+    <div class="listing-col">
+        <h4>
+            {% if profile.get_listings.count <= 5 %}
+            <a href="{% url 'profile_listings' profile.pk %}">{{ profile.first_name }}'s Listings</a>
+            {% else %}
+            {{profile.first_name}}'s listings
+            {% endif %}
+        </h4>
+
+        {% for listing in profile.get_listings.all|slice:":5" %}
+            <p>{{ listing.squishmallow.name }} the {{ listing.squishmallow.species }} - ${{listing.price}}</p>
+        {% endfor %}
+        
+
+        {% if profile.get_listings.count > 5 %}
+            <p>...</p>
+            <a href="{% url 'profile_listings' profile.pk %}">View More</a>
+        {% elif profile.get_listings.count == 0 %}
+            <p>No listings yet. {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                Add new listings <a href="{% url 'collection' profile.pk %}">here.</a>
+                {% endif %}
+            </p>
+        {% endif %}
+    </div>
+</div>
+<div style="text-align: center;">
+    {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+        <p><a href="{% url 'update_profile' profile.pk %}">Update my profile.</a></p>
+    {% endif %}
+</div>
+<div style="text-align: center;">
+    {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+        <p><a href="{% url 'delete_profile' profile.pk %}">Delete my profile.</a></p>
+    {% endif %}
+</div>
+
+{% endblock %}

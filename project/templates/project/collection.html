@@ -1,0 +1,41 @@
+{% extends 'project/base.html' %}
+{% block content %}
+
+
+<h2 class="header">{{profile.first_name}}'s Squishmallow Collection</h2>
+
+<div class="collection-grid">
+    {% if profile.get_collection.squishmallows.count == 0 %}
+        <p>There's nothing here!</p>
+            {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                <p><a href="{% url 'master' %}">Add your squishes here.</a></p>
+            {% endif %}
+    {% endif %}
+
+    {% for squish in squishmallows %}
+        <div class="collection-col">
+            {% if squish.photos %}
+                {% for img in squish.photos %}
+                    <img src="{{img.photo.url}}">
+                {% endfor %}
+            {% endif %}
+
+            <h4>{{squish.name}} the {{squish.species}}</h4>
+            {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+
+                {% if request.user.is_authenticated and profile.user.id == request.user.id %}
+                <div class="button-group">
+                    {% if not squish.photos %}
+                    <a href="{% url 'add_photo' %}?squish_id={{ squish.id }}" class="action-button">Add Photo</a>
+                    {% endif %}
+                    <a href="{% url 'create_listing' %}?squish_id={{ squish.id }}" class="action-button">List Squishmallow</a>
+                </div>
+                {% endif %}
+
+            {% endif %}
+        </div>
+
+    {% endfor %}
+
+</div>
+{% endblock %}

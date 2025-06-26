@@ -17,7 +17,7 @@ class Profile(models.Model):
     city = models.CharField(blank=True)
     email_address = models.EmailField()
     profile_image_url = models.URLField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="profile_user", on_delete=models.CASCADE)
 
     def get_status_messages(self):
         '''filters all status messages by their profile'''

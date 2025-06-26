@@ -1,0 +1,71 @@
+{% extends 'project/base.html' %}
+{% block content %}
+
+<h1 class="header">Master List of Squishmallows</h1>
+
+<form method="get" action="{% url 'master' %}" class="header">
+  <input
+    type="text"
+    name="q"
+    placeholder="Search by name or species"
+    value=""
+    />
+  <button type="submit">Search</button>
+</form>
+
+<div class="collection-grid">
+  {% for squish in squishmallows %}
+    <div class="master-col">
+      <h3>{{ squish.name }} the {{ squish.species }}</h3>
+
+      {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'add_squish' squish.id %}">
+          {% csrf_token %}
+          <button type="submit" class="action-button">Add to Collection</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}?next={% url 'master' %}" class="action-button">
+          Log in to add
+        </a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.number > 1 %}
+      <li><a href="?page=1">First</a></li>
+    {% endif %}
+
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+    {% endif %}
+
+    {% for num in paginator.page_range %}
+      {% if num == 1 or num == paginator.num_pages or num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+        {% if num == page_obj.number %}
+          <li><strong>{{ num }}</strong></li>
+        {% else %}
+          <li><a href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+      {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+        <li>...</li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    {% endif %}
+
+    {% if page_obj.number < paginator.num_pages %}
+      <li><a href="?page={{ paginator.num_pages }}">Last</a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+
+{% endblock %}

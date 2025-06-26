@@ -1,0 +1,30 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+
+<div>
+    <div class="collection-grid">
+        <!-- using container/grid in css to create a grid of profiles with a for loop -->
+        {% for profile in profiles %}
+            <div class="collection-col">
+                <!-- each individual item in the container is a profile -->
+                <p>
+                    {% if profile.profile_pic %}
+                    <a href="{% url 'profile' profile.pk %}">
+                        <img src="{{profile.profile_pic.url}}" style="width:200px;height:200px">
+                    </a>
+                    {% endif %}
+                </p>
+                <p>
+                    <a href="{% url 'profile' profile.pk %}">
+                        <h3>{{profile.first_name}} {{profile.last_name}}</h3>
+                    </a>
+                    <p></p>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+ </div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div>
+    <h1>Create New Profile</h1>
+
+    <h4>First, create a new user.</h4>
+    {{new_user_form.non_field_errors}}
+    <form action="{% url 'create_profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{new_user_form.as_table}}
+        </table>
+    <hr>
+    <h4>Next, create your profile.</h4>
+        {{form.non_field_errors}}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock %}

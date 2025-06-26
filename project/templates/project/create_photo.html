@@ -1,0 +1,17 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div>
+    <h4>Add a photo of your squish!</h4>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type='submit' name = 'Add Photo' value= 'Add Photo'>
+    </form>
+</div>
+
+{% endblock %}

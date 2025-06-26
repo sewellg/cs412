@@ -1,0 +1,35 @@
+{% extends 'project/base.html' %}
+{% block content %}
+
+
+<div class="profile-header">
+    <h2>Listings</h2>
+</div>
+<div class="collection-grid">
+        {% for item in listings %}
+        <div class="collection-col">
+            <p>Owner: {{item.owner.first_name}} {{item.owner.last_name}}</p>
+            <p>Squish: {{item.squishmallow.name}} the {{item.squishmallow.species}}</p>
+            <p>Price: ${{item.price}}</p>
+            <p><a href="{% url 'show_listing' item.pk %}">View Listing</a></p>
+        </div>
+        {% endfor %}
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li>
+                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+                
+                </li>
+            {% endif %}
+                <li class="">
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                </li>
+            {% if page_obj.has_next %}
+                <li>
+                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                </li>
+            {% endif %}
+            </ul>
+    {% endif %}
+{% endblock %}

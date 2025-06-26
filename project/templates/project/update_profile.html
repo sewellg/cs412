@@ -1,0 +1,18 @@
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div>
+    <h1>Update Profile</h1>
+
+    <form action="{% url 'update_profile' profile.pk %}" method="POST">
+        {% csrf_token %} 
+        <table>
+            <!-- display the form as a neat table -->
+            {{form.as_table}}
+        </table>
+        <input type="submit" name="submit" value="Submit">
+        <a href="{% url 'my_profile' %}"><input type="button" name="cancel" value="Cancel"></a>
+    </form>
+</div>
+{% endblock %}

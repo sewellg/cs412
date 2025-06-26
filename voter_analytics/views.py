@@ -4,8 +4,8 @@ from django.views.generic import *
 from . models import Voter
 
 import math
-import plotly
-import plotly.graph_objs as go
+# import plotly
+# import plotly.graph_objs as go
 from collections import Counter
 # Create your views here.
 

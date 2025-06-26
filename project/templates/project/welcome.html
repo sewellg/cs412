@@ -1,0 +1,23 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2 class="header">Welcome to the Squishmallow Collection Tracker!</h2>
+
+<ul class="navigation">
+    {% if request.user.is_authenticated %}
+        <li><a href="{% url 'my_profile' %}">My Profile</a></li>
+        <li>
+            <form method="post" action="{% url 'logout' %}" class="nav-form">
+                {% csrf_token %}
+                <button type="submit" class="nav-link-button">Log out</button>
+            </form>
+        </li>
+    {% else %}
+        <h4>Please log in.</h4>
+        <li><a href="{% url 'login' %}">Log in</a></li>
+    {% endif %}
+</ul>
+
+
+{% endblock %}

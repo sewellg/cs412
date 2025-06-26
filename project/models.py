@@ -3,35 +3,135 @@
 # Description: models for final project 
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
-class Genre(models.Model):
-    '''encapsulate data for a genre model'''
+class Squishmallow(models.Model):
+    '''class for an individual squishmallow object'''
 
-    # data attributes for genre model
-    genre_name = models.CharField()
+    name = models.TextField()
+    species = models.TextField()
+    # collected_date = models.DateField(blank=True)
 
-class Artist(models.Model):
-    '''encapsulate data for an artist model'''
+    def __str__(self):
+        return f"{self.name} the {self.species}"
 
-    # data attributes for artist model
-    artist_name = models.CharField()
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    def load_data():
+        import re
 
-class Song(models.Model):
-    '''encapsulate data for a song model'''
+        filename = "/Users/gsewe/django/squishmallows.txt"
+        with open(filename, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
 
-    # data attributes for song model
-    song_name = models.CharField()
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+        for line in lines:
+            line = line.strip()
+            match = re.match(r'^(.+?) the (.+)$', line)
+            if match:
+                name, species = match.groups()
+                squishmallow = Squishmallow(
+                                            name = name,
+                                            species = species
+                )
+                squishmallow.save()
+        print(f'Created {len(Squishmallow.objects.all())} Squishmallows')
+
+        
+
+class Badge(models.Model):
+    '''class for a user's badge'''
+    badge_name = models.TextField()
+
+    def __str__(self):
+        return f"{self.badge_name} Badge"
     
 class Profile(models.Model):
-    '''encapsulate data for a profile model'''
+    '''class for an individual profile'''
 
-    # data attributes for profile model
-    first_name = models.CharField()
-    last_name = models.CharField()
-    fav_genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True)
-    fav_song = models.ForeignKey(Song, on_delete=models.CASCADE, blank=True)
-    fav_artist = models.ForeignKey(Artist, on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.TextField(blank=False)
+    last_name = models.TextField(blank=True)
+    profile_pic = models.ImageField(blank=True)
+    fav_squish = models.ForeignKey(Squishmallow, on_delete=models.CASCADE)
+    badges = models.ManyToManyField(Badge, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+    
+    def get_collection(self):
+        '''finds a profile's collection'''
+        return self.user.collection
+    
+    def get_listings(self):
+        '''finds all listings for a user'''
+        listings = Listing.objects.filter(owner=self)
+        return listings
+    
+    def get_absolute_url(self):
+        '''return url to display one instance of model'''
+        return reverse('my_profile')
+    
+    def add_squish(self, squishmallow):
+        self.user.collection.squishmallows.add(squishmallow)
+    
+    def get_photos(self, squish):
+        qs = SquishPhoto.objects.filter(squish=squish).filter(profile=self)
+        return qs
+
+    def check_badges(self):
+        count = self.user.collection.squishmallows.count()
+        if count >= 5:
+            newcomer_badge = Badge.objects.get(badge_name='Newcomer')
+            if newcomer_badge not in self.badges.all():
+                self.badges.add(newcomer_badge)
+        if count >= 15:
+            rising_badge = Badge.objects.get(badge_name='Rising Squish')
+            if rising_badge not in self.badges.all():
+                self.badges.add(rising_badge)
+        if count >= 30:
+            fiend_badge = Badge.objects.get(badge_name='Squish Fiend')
+            if fiend_badge not in self.badges.all():
+                self.badges.add(fiend_badge)
+        if count >= 50:
+            master_badge = Badge.objects.get(badge_name='Master Squish')
+            if master_badge not in self.badges.all():
+                self.badges.add(master_badge)
+        if count >= 100:
+            god_badge = Badge.objects.get(badge_name='Squish God')
+            if god_badge not in self.badges.all():
+                self.badges.add(god_badge)
+
+class Listing(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    squishmallow = models.ForeignKey(Squishmallow, on_delete=models.CASCADE)
+    price = models.IntegerField(blank=False)
+
+    def __str__(self):
+        return f"{self.owner.first_name} {self.owner.last_name}'s Listing"
+    
+    def get_absolute_url(self):
+        '''return url to display upon creation of listing'''
+        return reverse('show_listing', kwargs={'pk':self.pk})
+    
+    
+
+class Collection(models.Model):
+    '''class for a user's collection'''
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    squishmallows = models.ManyToManyField(Squishmallow, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Collection"
+    
+class SquishPhoto(models.Model):
+    '''class for a user-specific squishmallow photo'''
+    squish = models.ForeignKey(Squishmallow, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    photo = models.ImageField()
+
+    def __str__(self):
+        return f"{self.profile.first_name}'s {self.squish.name}"
+    
+    def get_absolute_url(self):
+        return reverse('collection', kwargs={'pk':self.profile.pk})

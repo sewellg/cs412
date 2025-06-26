@@ -1,0 +1,17 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div>
+    <h1>Create New Listing</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type='submit' name = 'Add Listing!' value= 'Add Listing!'>
+    </form>
+</div>
+
+{% endblock %}
